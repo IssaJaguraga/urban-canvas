@@ -12,32 +12,32 @@ import SwiftUI
 final class StreetArtViewModel {
     var streetArts = [
         StreetArt(title: "Liberté Égalité Fraternité",
-                  image: "",
-                  location: ""
+                  image: "liberte-egalite-fraternite",
+                  location: "Paris"
         ),
         StreetArt(title: "La Joconde de Marseille",
-                  image: "",
-                  location: ""
+                  image: "La-Joconde-de-Marseille",
+                  location: "Marseille"
         ),
         StreetArt(title: "La Maison de Cécile",
-                  image: "",
-                  location: ""
+                  image: "La-maison-de-Cécile",
+                  location: "Paris"
         ),
         StreetArt(title: "Chloé",
-                  image: "",
-                  location: ""
+                  image: "Chloe",
+                  location: "Marseille"
         ),
         StreetArt(title: "PA_278",
-                  image: "",
-                  location: ""
+                  image: "PA_278",
+                  location: "Paris"
         ),
         StreetArt(title: "Chuuuut",
-                  image: "",
-                  location: ""
+                  image: "Chuuuut",
+                  location: "Paris"
         ),
         StreetArt(title: "Le Tigre et la Cigale",
-                  image: "",
-                  location: ""
+                  image: "Le-Tigre-et-la-Cigale",
+                  location: "Marseille"
         )
     
     

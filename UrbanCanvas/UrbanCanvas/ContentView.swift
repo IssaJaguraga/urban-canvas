@@ -8,17 +8,45 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(StreetArtViewModel.self) private var vm
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(vm.streetArts) { streetArt in
+                NavigationLink {
+                    Text(streetArt.title)
+                } label: {
+                    HStack {
+                        Image(streetArt.image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                            .clipped()
+                        
+                        VStack(alignment: .leading) {
+                            Text(streetArt.title)
+                            HStack() {
+                                Image(systemName: "mappin.circle.fill")
+                                    .foregroundStyle(.secondText)
+                                
+                                Text(streetArt.location)
+                                    .foregroundStyle(.secondText)
+                            }
+                        }
+                    }
+                }
+               
+            }
+            
+            .navigationTitle("Liste des Street arts")
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .environment(StreetArtViewModel())
 }
+
+
