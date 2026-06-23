@@ -14,7 +14,7 @@ struct ContentView: View {
         NavigationStack {
             List(vm.streetArts) { streetArt in
                 NavigationLink {
-                    Text(streetArt.title)
+                    StreetArtDetailView(streetArt: streetArt)
                 } label: {
                     HStack {
                         Image(streetArt.image)
@@ -30,7 +30,7 @@ struct ContentView: View {
                                 Image(systemName: "mappin.circle.fill")
                                     .foregroundStyle(.secondText)
                                 
-                                Text(streetArt.location)
+                                Text(streetArt.city)
                                     .foregroundStyle(.secondText)
                             }
                         }
