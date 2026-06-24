@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(StreetArtViewModel.self) private var vm
+    @State private var showFilter = false
     
     var body: some View {
         NavigationStack {
-            List(vm.streetArts) { streetArt in
+            List(vm.filteredStreetArts) { streetArt in
                 NavigationLink {
                     StreetArtDetailView(streetArt: streetArt)
                 } label: {
@@ -36,10 +37,22 @@ struct ContentView: View {
                         }
                     }
                 }
-               
             }
             
             .navigationTitle("Liste des Street arts")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                       showFilter = true
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                    }
+                }
+            }
+            .sheet(isPresented: $showFilter) {
+                FilterView(vm: vm)
+                    .presentationDetents([.height(450)])
+            }
         }
     }
 }

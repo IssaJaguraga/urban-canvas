@@ -10,11 +10,22 @@ import SwiftUI
 
 @Observable
 final class StreetArtViewModel {
+    var selectedType: String = "Tous"
+    
+    var filteredStreetArts: [StreetArt] {
+        if selectedType == "Tous" {
+            return streetArts
+        } else {
+            return streetArts.filter { streetArt in
+                streetArt.type == selectedType
+            }
+        }
+    }
     var streetArts = [
         StreetArt(title: "Liberté Égalité Fraternité",
                   image: "liberte-egalite-fraternite",
                   city: "Paris",
-                  type: "Mural painting",
+                  type: "Invaders",
                   condition: "Bonne",
                   date: "2021",
                   author: "Artiste urbain inconnu",
@@ -27,7 +38,7 @@ final class StreetArtViewModel {
         StreetArt(title: "La Joconde de Marseille",
                   image: "La-Joconde-de-Marseille",
                   city: "Marseille",
-                  type: "Halftone",
+                  type: "Mural",
                   condition: "Bonne",
                   date: "Mars 2022",
                   author: "KAN DMV",
@@ -39,7 +50,7 @@ final class StreetArtViewModel {
         StreetArt(title: "La Maison de Cécile",
                   image: "La-maison-de-Cécile",
                   city: "Paris",
-                  type: "Street mural",
+                  type: "Mosaïques",
                   condition: "Bonne",
                   date: "2020",
                   author: "Artiste contemporain",
@@ -51,7 +62,7 @@ final class StreetArtViewModel {
         StreetArt(title: "Chloé",
                   image: "Chloe",
                   city: "Marseille",
-                  type: "Portrait mural",
+                  type: "Mural",
                   condition: "Bonne",
                   date: "2021",
                   author: "Artiste indépendant",
@@ -63,7 +74,7 @@ final class StreetArtViewModel {
         StreetArt(title: "PA_278",
                   image: "PA_278",
                   city: "Paris",
-                  type: "Abstract street art",
+                  type: "Stencil",
                   condition: "Bonne",
                   date: "2019",
                   author: "Inconnu",
@@ -75,7 +86,7 @@ final class StreetArtViewModel {
         StreetArt(title: "Chuuuut",
                   image: "Chuuuut",
                   city: "Paris",
-                  type: "Conceptual art",
+                  type: "Stencil",
                   condition: "Bonne",
                   date: "2020",
                   author: "Collectif Urbain",
@@ -87,7 +98,7 @@ final class StreetArtViewModel {
         StreetArt(title: "Le Tigre et la Cigale",
                   image: "Le-Tigre-et-la-Cigale",
                   city: "Marseille",
-                  type: "Figurative mural",
+                  type: "Calligraphie",
                   condition: "Bonne",
                   date: "2022",
                   author: "Artist français",
