@@ -72,9 +72,11 @@ struct StreetArtDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             }
+            
         }
         .ignoresSafeArea()
     }
+    
 }
 #Preview {
     StreetArtDetailView(
