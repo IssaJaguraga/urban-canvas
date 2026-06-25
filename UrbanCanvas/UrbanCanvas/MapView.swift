@@ -11,7 +11,7 @@ import SwiftUI
 struct MapView: View {
     @Environment(StreetArtViewModel.self) private var vm
     @State private var selectedStreetArt: StreetArt?
-  
+    
     let position = MapCameraPosition.region(
         MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 43.2951, longitude: 5.3746),
@@ -25,14 +25,9 @@ struct MapView: View {
             ZStack {
                 Map(initialPosition: position) {
                     ForEach(vm.streetArts) { streetArt in
-                        Annotation(
-                            "",
-                            coordinate: CLLocationCoordinate2D(
-                                latitude: streetArt.latitude,
-                                longitude: streetArt.longitude
-                            )
-                        ) {
-                         
+                        Annotation("Vieux-Port",coordinate: CLLocationCoordinate2D(
+                            latitude: streetArt.latitude,longitude: streetArt.longitude)) {
+                                
                                 VStack(spacing: 0) {
                                     Image(systemName: "mappin.circle.fill")
                                         .foregroundColor(.secondOrange)
@@ -50,7 +45,7 @@ struct MapView: View {
                                 .onTapGesture {
                                     selectedStreetArt  = streetArt
                                 }
-                        }
+                            }
                     }
                 }
             }
@@ -58,35 +53,44 @@ struct MapView: View {
         .sheet(item: $selectedStreetArt) { streetArt in
             NavigationStack {
                 StreetArtDetailView(streetArt: streetArt)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button {
+                                selectedStreetArt = nil
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 17, weight: .medium))
+                                    .foregroundStyle(.primary)
+                                    .frame(width: 36, height: 36)
+                                
+                                    .clipShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        ToolbarItem(placement: .principal) {
+                            Text(streetArt.title)
+                                .fontWeight(.bold)
+                        }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            NavigationLink {
+                                StreetArtDetailView(streetArt: streetArt)
+                            } label: {
+                                Image(systemName: "arrow.right")
+                                    .font(.system(size: 17, weight: .medium))
+                                    .foregroundStyle(.white)
+                                    .frame(width: 36, height: 36)
+                                    .background(Color.secondOrange)
+                                    .clipShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            
+                        }
+                    }
             }
             .presentationDetents([.medium])
-//        .toolbar {
-//            ToolbarItem(placement: .topBarLeading) {
-//                Button {
-//                    dismiss()
-//                } label: {
-//                    Image(systemName: "xmark")
-//                        .font(.title2)
-//                        .foregroundStyle(.secondText)
-//                }
-//            }
-//            ToolbarItem(placement: .topBarTrailing) {
-//                NavigationLink {
-//                    StreetArtDetailView(streetArt: streetArt)
-//                } label: {
-//                    Image(systemName: "arrow.right")
-//                        .font(.title2)
-//                        .foregroundStyle(.mainOrange)
-//                }
-//            }
-//            
-//        }
-        }
-
-            
         }
     }
-
+}
 
 #Preview {
     MapView()
