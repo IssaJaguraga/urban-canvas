@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import MapKit
 struct StreetArtDetailView: View {
     let streetArt: StreetArt
     
@@ -20,18 +20,17 @@ struct StreetArtDetailView: View {
                     .frame(width: 411, height: 278)
                     .clipped()
                     .opacity(0.6)
-                   
+                
                 Text(streetArt.title)
-                    .font(.title3)
+                    .font(.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(.mainOrange)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                    .padding(.trailing, 110)
                 
                 Text(streetArt.description)
                     .font(.footnote)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                    .frame(width: 358, height: 165, alignment: .topLeading)
+                    
                 
                 VStack(alignment: .leading){
                     HStack {
@@ -66,20 +65,45 @@ struct StreetArtDetailView: View {
                         }
                         Text("(Latitude: \(streetArt.latitude), Longitude: \(streetArt.longitude))")
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                
                 }
                 .font(.footnote)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
+                .frame(width: 358, height: 108, alignment: .topLeading)
+                
+                Map(initialPosition: .region(
+                    MKCoordinateRegion(
+                        center: CLLocationCoordinate2D(
+                            latitude: streetArt.latitude,
+                            longitude: streetArt.longitude),
+                        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))))
+                {
+                    Marker(streetArt.title, coordinate: CLLocationCoordinate2D(
+                        latitude: streetArt.latitude,
+                        longitude: streetArt.longitude))
+                    .tint(.mainOrange)
+                    
+                    
+                }
+                
+                .frame(width: 358, height: 157)
+                .clipShape(RoundedRectangle(cornerRadius: 26))
+                .padding(.top, 14)
+                
+                
+                Text("Image fournie par MauMA")
+                    .font(.caption2)
+                    .foregroundStyle(.secondText)
+                    .padding(.bottom, 30)
+                    .padding(.trailing, 210)
+                    
+                  
             }
-            
         }
         .ignoresSafeArea()
     }
-    
 }
 #Preview {
     StreetArtDetailView(
-        streetArt: StreetArtViewModel().streetArts[0]
+        streetArt: StreetArtViewModel().streetArts[1]
     )
 }
