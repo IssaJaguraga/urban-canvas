@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FilterView: View {
-    @Bindable var vm: StreetArtViewModel
+    @Bindable var streetArtVM: StreetArtViewModel
     @Environment(\.dismiss) private var dismiss
     
     let types = ["Tous", "Invaders", "Mosaïques", "Mural", "Stencil", "Calligraphie"]
@@ -28,14 +28,14 @@ struct FilterView: View {
                
             ForEach(types, id: \.self) { type in
                 Button {
-                    vm.selectedType = type
+                    streetArtVM.selectedType = type
                     dismiss()
                 } label: {
                     Text(type)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color(.systemGray4).opacity(0.6))
-                        .foregroundStyle(vm.selectedType == type ? .mainOrange : .black)
+                        .foregroundStyle(streetArtVM.selectedType == type ? .mainOrange : .black)
                         .clipShape(RoundedRectangle(cornerRadius: 100))
                 }
             }
@@ -47,5 +47,5 @@ struct FilterView: View {
 }
 
 #Preview {
-    FilterView(vm: StreetArtViewModel())
+    FilterView(streetArtVM: StreetArtViewModel())
 }

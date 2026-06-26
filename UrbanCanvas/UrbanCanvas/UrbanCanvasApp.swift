@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct UrbanCanvasApp: App {
-    @State private var vm = StreetArtViewModel()
+    @State private var streetArtVM = StreetArtViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(vm)
+                .environment(streetArtVM)
                 
         }
     }

@@ -9,7 +9,7 @@ import MapKit
 import SwiftUI
 
 struct MapView: View {
-    @Environment(StreetArtViewModel.self) private var vm
+    @Environment(StreetArtViewModel.self) private var streetArtVM
     @State private var selectedStreetArt: StreetArt?
     
     let position = MapCameraPosition.region(
@@ -24,7 +24,7 @@ struct MapView: View {
         NavigationStack{
             ZStack {
                 Map(initialPosition: position) {
-                    ForEach(vm.streetArts) { streetArt in
+                    ForEach(streetArtVM.streetArts) { streetArt in
                         Annotation("Vieux-Port",coordinate: CLLocationCoordinate2D(
                             latitude: streetArt.latitude,longitude: streetArt.longitude)) {
                                 

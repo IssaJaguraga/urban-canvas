@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(StreetArtViewModel.self) private var vm
+    @Environment(StreetArtViewModel.self) private var streetArtVM
     @State private var showFilter = false
     @State private var styleIndex = 0
     
@@ -18,7 +18,7 @@ struct ContentView: View {
             
             Group {
                 if styleIndex == 0 {
-                    List(vm.filteredStreetArts) { streetArt in
+                    List(streetArtVM.filteredStreetArts) { streetArt in
                         NavigationLink {
                             StreetArtDetailView(streetArt: streetArt)
                             
@@ -89,7 +89,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showFilter) {
-                FilterView(vm: vm)
+                FilterView(streetArtVM: streetArtVM)
                     .presentationDetents([.height(450)])
             }
         }
