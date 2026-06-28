@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuthorView: View {
-    @Environment(AuthorModel.self) private var authorModel
+    @Environment(AuthorViewModel.self) private var authorModelVM
     var body: some View {
         ZStack {
             Color.backgroundGray
@@ -21,7 +21,7 @@ struct AuthorView: View {
                     ],
                     spacing: 16
                 ) {
-                    ForEach(authorModel.authors) { author in
+                    ForEach(authorModelVM.authors) { author in
                         VStack(spacing: 0) {
                             if let image = author.image {
                                 Image(image)
@@ -95,5 +95,5 @@ struct AuthorView: View {
 
 #Preview {
     AuthorView()
-        .environment(AuthorModel())
+        .environment(AuthorViewModel())
 }

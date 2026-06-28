@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct UrbanCanvasApp: App {
     @State private var streetArtVM = StreetArtViewModel()
-    @State private var authorModel = AuthorModel()
+    @State private var authorModel = AuthorViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()

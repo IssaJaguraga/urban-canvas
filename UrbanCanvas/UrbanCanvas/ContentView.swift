@@ -21,6 +21,10 @@ struct ContentView: View {
                 AuthorView()
             }
             
+            Tab("Missions", systemImage: "star.circle") {
+                MissionView()
+            }
+            
         }
         .tint(.mainOrange)
     }
@@ -29,8 +33,7 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environment(StreetArtViewModel())
-        .environment(AuthorModel())
-        
+        .environment(AuthorViewModel())
 }
 
 

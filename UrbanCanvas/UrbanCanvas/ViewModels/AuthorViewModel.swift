@@ -1,5 +1,5 @@
 //
-//  AuthorModel.swift
+//  AuthorViewModel.swift
 //  UrbanCanvas
 //
 //  Created by Issa on 26/06/2026.
@@ -11,7 +11,7 @@ import Foundation
 import SwiftUI
 
 @Observable
-final class AuthorModel {
+final class AuthorViewModel {
     
     var authors = [
         Author(firstName: "KAN",
