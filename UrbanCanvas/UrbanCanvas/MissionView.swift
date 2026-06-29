@@ -12,6 +12,7 @@ struct MissionView: View {
     @Environment(StreetArtViewModel.self) var streetArtVM
     //    let streetArt: StreetArt
     @State private var missions: [Mission] = []
+    // @State private var isDiscovered = false
     
     var body: some View {
         ZStack {
@@ -44,6 +45,7 @@ struct MissionView: View {
                         Rectangle()
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                             .foregroundStyle(.backgroundGray)
+                            .frame(height: 10)
                         
                         Text("0 oeuvre découverte sur 5")
                             .foregroundStyle(.secondText)
@@ -53,36 +55,45 @@ struct MissionView: View {
                     .cornerRadius(15)
                     .padding(.bottom, 12)
                     
-                    ForEach(streetArtVM.streetArts.prefix(6)) { streetArt in
+                    ForEach($missions, id: \.id) { $mission in
                         VStack(alignment: .leading, spacing: 0) {
                             ZStack(alignment: .topTrailing) {
-                                Image(streetArt.image)
+                                Image(mission.streetArt.image)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(height: 180)
                                     .frame(maxWidth: .infinity)
                                     .clipped()
-                                
-                                Text("Découverte")
-                                    .font(.caption.bold())
-                                    .foregroundStyle(.white)
-                                    .padding (8)
-                                    .background(.green, in: Capsule())
-                                    .padding()
-                                
+                                HStack {
+                                    if mission.isDiscovered {
+                                        Image(systemName: "checkmark")
+                                            .font(.caption.bold())
+                                    }
+                                    
+                                    Text(mission.isDiscovered ? "Découverte" :  "À découvrir")
+                                        .font(.caption.bold())
+                                }
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(
+                                    mission.isDiscovered ? Color.green : Color.secondOrange,
+                                    in: Capsule()
+                                )
+                                .padding(10)
                             }
+                            
                             VStack(alignment: .leading, spacing: 6) {
-                                Text(streetArt.title)
+                                Text(mission.streetArt.title)
                                     .font(.title3)
                                     .fontWeight(.semibold)
-
-                                Label(streetArt.city, systemImage: "mappin.and.ellipse")
+                                
+                                Label(mission.streetArt.city, systemImage: "mappin.and.ellipse")
                                     .foregroundStyle(.secondary)
                             }
                             .padding()
                             
                             HStack(spacing: 12) {
-                                
                                 Button {
                                     
                                 } label: {
@@ -90,27 +101,27 @@ struct MissionView: View {
                                         .frame(maxWidth: .infinity)
                                         .frame(height: 40)
                                         .fontWeight(.semibold)
+                                        .foregroundColor(.black)
+                                        .padding(6)
                                 }
                                 .background(
-                                    RoundedRectangle(cornerRadius: 15)
+                                    Capsule()
                                         .fill(Color.backgroundGray)
-                                        )
-                                .foregroundColor(.black)
-                                
+                                )
                                 
                                 Button {
-                                    
+                                    mission.isDiscovered.toggle()
                                 } label: {
-                                    Text("Découverte")
+                                    Text(mission.isDiscovered ? "Annuler" : "Découverte")
                                         .frame(maxWidth: .infinity)
-
                                         .frame(height: 40)
                                         .fontWeight(.semibold)
+                                        .foregroundStyle(mission.isDiscovered ? .mainText : .white)
+                                        .padding(6)
                                 }
                                 .background(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .fill(Color.secondOrange))
-                                .foregroundColor(.white)
+                                    Capsule()
+                                        .fill(mission.isDiscovered ? .backgroundGray : .secondOrange))
                             }
                             .padding()
                         }
@@ -120,33 +131,38 @@ struct MissionView: View {
                             bottomLeadingRadius: 20,
                             bottomTrailingRadius: 20,
                             topTrailingRadius: 20))
+                        .padding(.bottom, 12)
                     }
-                    .padding(.bottom, 12)
-                }
-                
-                Button {
                     
-                } label: {
-                    Text("Nouvelle mission")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 20)
+                    Button {
                         
+                    } label: {
+                        Text("Nouvelle mission")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 20)
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.white)
+                            .stroke(.secondOrange, lineWidth: 2))
+                    .fontWeight(.bold)
+                    .foregroundColor(.secondOrange)
+                    .padding(.bottom)
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.white)
-                        .stroke(.secondOrange, lineWidth: 2))
-                .fontWeight(.bold)
-                .foregroundColor(.secondOrange)
-                .padding(.bottom)
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
+            .onAppear {
+                if missions.isEmpty {
+                    let streetArts = streetArtVM.streetArts.prefix(4)
+                    missions = streetArts.map {
+                        Mission(streetArt: $0)
+                    }
+                }
+            }
         }
-        
     }
-       
 }
 
 #Preview {

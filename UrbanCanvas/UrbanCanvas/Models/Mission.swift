@@ -8,7 +8,7 @@
 import Foundation
 
 struct Mission: Identifiable {
-    var id = UUID()
-    var streeArt: StreetArt
-    var isDiscoverd: Bool = false
+    let id = UUID()
+    let streetArt: StreetArt
+    var isDiscovered: Bool = false
 }
